@@ -1,0 +1,51 @@
+{
+  "name": "n8n-nodes-rivoo",
+  "version": "0.1.0",
+  "description": "n8n community node for the RivooPay payments API: PIX charges, refunds and clients",
+  "keywords": [
+    "n8n-community-node-package",
+    "rivoo",
+    "rivoopay",
+    "pix",
+    "payments"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/payera-br/n8n-nodes-rivoo",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/payera-br/n8n-nodes-rivoo.git"
+  },
+  "main": "index.js",
+  "engines": {
+    "node": ">=20.15"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc && node scripts/copy-icons.mjs",
+    "dev": "tsc --watch",
+    "typecheck": "tsc --noEmit",
+    "prepublishOnly": "npm run build"
+  },
+  "n8n": {
+    "n8nNodesApiVersion": 1,
+    "credentials": [
+      "dist/credentials/RivooApi.credentials.js",
+      "dist/credentials/RivooWebhookApi.credentials.js"
+    ],
+    "nodes": [
+      "dist/nodes/Rivoo/Rivoo.node.js",
+      "dist/nodes/RivooTrigger/RivooTrigger.node.js"
+    ]
+  },
+  "peerDependencies": {
+    "n8n-workflow": "*"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/node": "^22.10.0",
+    "n8n-workflow": "*",
+    "typescript": "^5.7.2"
+  }
+}
