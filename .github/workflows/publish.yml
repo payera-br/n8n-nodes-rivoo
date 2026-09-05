@@ -39,10 +39,6 @@ jobs:
 
       - run: npm run build
 
-      # Trusted publishing can only be configured on a package that already exists,
-      # so the first release authenticates with a short-lived granular token and asks
-      # for provenance explicitly. Once 0.1.0 is on the registry, configure the trusted
-      # publisher, drop this env block and the --provenance flag, and revoke the token.
-      - run: npm publish --access public --provenance
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      # Authenticated by the OIDC token minted from id-token: write above; npm attaches
+      # the provenance attestation itself, so neither a secret nor --provenance is needed.
+      - run: npm publish --access public
