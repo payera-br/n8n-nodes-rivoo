@@ -1,7 +1,11 @@
 name: Publish
 
-# n8n requires verified community nodes to be published from CI with an npm
-# provenance statement (local publishes are rejected from 2026-05-01 on).
+# Publishes through npm trusted publishing: the OIDC token minted below replaces a
+# long-lived NPM_TOKEN, and npm attaches the provenance attestation that n8n requires
+# for verified community nodes (local publishes are rejected from 2026-05-01 on).
+#
+# Requires a trusted publisher configured on npmjs.com for this repository and this
+# workflow filename.
 on:
   release:
     types: [published]
@@ -19,10 +23,15 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: '22'
+          node-version: '24'
           registry-url: 'https://registry.npmjs.org'
 
+      # Trusted publishing needs npm >= 11.5.1; the bundled version trails it.
+      - run: npm install -g npm@latest
+
       - run: npm ci
+
+      - run: npm run lint
 
       - run: npm run typecheck
 
@@ -30,6 +39,4 @@ jobs:
 
       - run: npm run build
 
-      - run: npm publish --provenance --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - run: npm publish --access public

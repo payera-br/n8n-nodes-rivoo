@@ -97,8 +97,22 @@ cd ~/.n8n/custom && npm link n8n-nodes-rivoo
 n8n start
 ```
 
-Publishing goes through `.github/workflows/publish.yml` (npm provenance), which n8n requires
-for verified community nodes.
+### Publishing
+
+Releases run `.github/workflows/publish.yml` through npm **trusted publishing**: the workflow
+mints a short-lived OIDC token, so there is no `NPM_TOKEN` secret, and npm attaches the
+provenance attestation n8n requires for verified community nodes.
+
+One-time setup on npmjs.com, under the package's *Trusted Publisher* settings:
+
+| Field | Value |
+| --- | --- |
+| Organization or user | `payera-br` |
+| Repository | `n8n-nodes-rivoo` |
+| Workflow filename | `publish.yml` |
+
+Then publish by creating a GitHub release (or running the workflow manually). The package and
+the repository both have to stay public for provenance to be accepted.
 
 ## License
 
