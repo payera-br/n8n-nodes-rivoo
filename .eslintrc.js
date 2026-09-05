@@ -1,7 +1,9 @@
 module.exports = {
 	root: true,
 	env: { es6: true, node: true },
-	ignorePatterns: ['.eslintrc.js', '**/*.js', '**/node_modules/**', '**/dist/**'],
+	// Test files are outside the build tsconfig and carry none of the node
+	// conventions these rules check.
+	ignorePatterns: ['.eslintrc.js', '**/*.js', '**/*.test.ts', '**/node_modules/**', '**/dist/**'],
 	overrides: [
 		{
 			files: ['package.json'],
