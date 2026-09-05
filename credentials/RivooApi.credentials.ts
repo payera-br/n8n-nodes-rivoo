@@ -1,7 +1,8 @@
 import type {
-	IAuthenticateGeneric,
+	ICredentialDataDecryptedObject,
 	ICredentialTestRequest,
 	ICredentialType,
+	IHttpRequestOptions,
 	INodeProperties,
 } from 'n8n-workflow';
 
@@ -41,21 +42,27 @@ export class RivooApi implements ICredentialType {
 		},
 	];
 
-	authenticate: IAuthenticateGeneric = {
-		type: 'generic',
-		properties: {
-			headers: {
-				'X-API-KEY': '={{$credentials.apiKey}}',
-				// Empty header values are dropped by the HTTP layer, so an unset version
-				// falls back to the company pin server-side.
-				'X-Api-Version': '={{$credentials.apiVersion}}',
-			},
-		},
+	// Function form instead of the generic one: an empty X-Api-Version header still
+	// reaches the API as `''`, which it rejects with 400 INVALID_API_VERSION, so the
+	// header has to be omitted entirely when the field is left blank.
+	authenticate = async (
+		credentials: ICredentialDataDecryptedObject,
+		requestOptions: IHttpRequestOptions,
+	): Promise<IHttpRequestOptions> => {
+		const apiVersion = (credentials.apiVersion as string | undefined)?.trim();
+
+		requestOptions.headers = {
+			...requestOptions.headers,
+			'X-API-KEY': credentials.apiKey as string,
+			...(apiVersion ? { 'X-Api-Version': apiVersion } : {}),
+		};
+
+		return requestOptions;
 	};
 
 	test: ICredentialTestRequest = {
 		request: {
-			baseURL: '={{$credentials.baseUrl}}',
+			baseURL: '={{$credentials?.baseUrl}}',
 			url: '/company',
 		},
 	};
