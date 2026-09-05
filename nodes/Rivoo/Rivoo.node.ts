@@ -6,7 +6,6 @@ import type {
 	INodeType,
 	INodeTypeDescription,
 } from 'n8n-workflow';
-import { NodeConnectionTypes } from 'n8n-workflow';
 
 import { chargeFields, chargeOperations } from './ChargeDescription';
 import { clientFields, clientOperations } from './ClientDescription';
@@ -71,8 +70,8 @@ export class Rivoo implements INodeType {
 			name: 'Rivoo',
 		},
 		usableAsTool: true,
-		inputs: [NodeConnectionTypes.Main],
-		outputs: [NodeConnectionTypes.Main],
+		inputs: ['main'],
+		outputs: ['main'],
 		credentials: [
 			{
 				name: 'rivooApi',

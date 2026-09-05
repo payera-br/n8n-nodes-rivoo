@@ -10,6 +10,10 @@
     "payments"
   ],
   "license": "MIT",
+  "author": {
+    "name": "Payera",
+    "email": ""
+  },
   "homepage": "https://github.com/payera-br/n8n-nodes-rivoo",
   "repository": {
     "type": "git",
@@ -26,6 +30,7 @@
     "build": "tsc && node scripts/copy-icons.mjs",
     "dev": "tsc --watch",
     "typecheck": "tsc --noEmit",
+    "lint": "eslint package.json credentials nodes --ext .ts",
     "prepublishOnly": "npm run build"
   },
   "n8n": {
@@ -45,6 +50,10 @@
   "devDependencies": {
     "@types/express": "^4.17.21",
     "@types/node": "^22.10.0",
+    "@typescript-eslint/parser": "^7.18.0",
+    "eslint": "^8.57.0",
+    "eslint-plugin-n8n-nodes-base": "^1.16.3",
+    "jsonc-eslint-parser": "^2.4.0",
     "n8n-workflow": "*",
     "typescript": "^5.7.2"
   }

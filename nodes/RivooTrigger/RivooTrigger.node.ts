@@ -10,7 +10,7 @@ import type {
 	IWebhookResponseData,
 	JsonObject,
 } from 'n8n-workflow';
-import { NodeApiError, NodeConnectionTypes, NodeOperationError } from 'n8n-workflow';
+import { NodeApiError, NodeOperationError } from 'n8n-workflow';
 
 const EVENT_HEADER = 'x-webhook-event';
 const SIGNATURE_HEADER = 'x-webhook-signature';
@@ -84,7 +84,7 @@ export class RivooTrigger implements INodeType {
 			name: 'Rivoo Trigger',
 		},
 		inputs: [],
-		outputs: [NodeConnectionTypes.Main],
+		outputs: ['main'],
 		credentials: [
 			{
 				name: 'rivooApi',

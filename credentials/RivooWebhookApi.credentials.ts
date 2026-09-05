@@ -8,7 +8,7 @@ import type { ICredentialType, INodeProperties } from 'n8n-workflow';
 export class RivooWebhookApi implements ICredentialType {
 	name = 'rivooWebhookApi';
 
-	displayName = 'Rivoo Webhook Signing Secret';
+	displayName = 'Rivoo Webhook Signing Secret API';
 
 	documentationUrl = 'https://api.rivoopay.com/api/docs';
 
