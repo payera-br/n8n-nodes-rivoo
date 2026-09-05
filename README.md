@@ -21,8 +21,9 @@ Self-hosted n8n: **Settings → Community nodes → Install** → `n8n-nodes-riv
 | API Key | sent as `X-API-KEY` |
 | API Version | optional, sent as `X-Api-Version`; empty falls back to the company pin |
 
-The credential test calls `GET /company`, so the key needs at least the `company: read` scope.
-Each operation needs the scope of its own endpoint (`payments`, `catalog`, `webhooks`).
+The credential test calls `GET /charge/sales-limits`, so the key needs the `payments: read`
+scope for the test button to pass. Each operation needs the scope of its own endpoint
+(`payments`, `catalog`, `webhooks`) regardless of the test.
 
 ### Rivoo Webhook Signing Secret (`rivooWebhookApi`)
 

@@ -60,10 +60,13 @@ export class RivooApi implements ICredentialType {
 		return requestOptions;
 	};
 
+	// GET /company is not reachable with an API key in production, so it reports a
+	// valid credential as broken. Sales limits is a cheap read that any key used for
+	// the charge operations can reach.
 	test: ICredentialTestRequest = {
 		request: {
 			baseURL: '={{$credentials?.baseUrl}}',
-			url: '/company',
+			url: '/charge/sales-limits',
 		},
 	};
 }
