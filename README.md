@@ -46,6 +46,9 @@ The `secret` returned once by `POST /webhook`. Used only by the trigger node.
 | Client | Get | `GET /client/id/{id}` | `catalog: read` |
 | Client | Get Many | `GET /client` | `catalog: read` |
 
+The trigger additionally uses `POST /webhook`, `GET /webhook/{id}` and `DELETE /webhook/{id}`
+(`webhooks: read` / `webhooks: write`) when it registers itself.
+
 Charge creation and duplication accept an **Idempotency Key**, sent as the `Idempotency-Key`
 header; the API replays the first response for 24h when the same key is reused.
 
@@ -54,8 +57,13 @@ receive the payload directly.
 
 ## Trigger
 
-The Rivoo API only exposes webhook *creation* to API keys — `PUT /webhook` and
-`DELETE /webhook/{id}` are JWT-only — so the trigger does not register itself. Setup:
+**Register Webhook Automatically** (default): activating the workflow creates the webhook in
+Rivoo through `POST /webhook` and deactivating deletes it through `DELETE /webhook/{id}`. The
+signing secret returned on creation is kept in the workflow's static data, so no webhook
+credential is needed. Requires an API key with `webhooks: write` and an n8n instance reachable
+on a public URL — Rivoo rejects private/loopback webhook URLs.
+
+Manual mode (toggle off), for local or tunnel-less setups:
 
 1. Activate the workflow and copy the node's **production** webhook URL.
 2. Create the webhook in the Rivoo dashboard (or `POST /webhook`) pointing at that URL,
